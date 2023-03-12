@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:40:58 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/12 12:30:42 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/12 17:41:04 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_philo
 {
     int             id;
     int             eat_count;
+    size_t          time_last_meal;
     t_mutex         *left_fork;
     t_mutex         *right_fork;
     t_bool          is_dead;

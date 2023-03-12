@@ -10,7 +10,7 @@ SRCS				=	$(SOURCES)
 
 CC					=	cc
 
-SOURCES				=	main.c utils.c error.c\
+SOURCES				=	main.c utils.c error.c clean_datas.c actions.c init_functions.c\
 						
 
 DIRS				=	. sources

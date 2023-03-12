@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:36 by lsantana          #+#    #+#             */
-/*   Updated: 2023/02/22 16:00:42 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/12 17:52:33 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,17 @@ int ft_strlen(char *str)
     while (str[i])
         i++;
     return (i);
+}
+
+size_t	get_time(void)
+{
+	t_timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+size_t get_time_diff(size_t start_time)
+{
+    return (get_time() - start_time);
 }
