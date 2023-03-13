@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 17:58:29 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/12 17:59:19 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:03:42 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ void init_common_data(t_common *c_data, char *argv[])
         c_data->must_eat = ft_atoi(argv[5]);
     else
         c_data->must_eat = -1;
+    c_data->finish_eat = 0;
+    c_data->someone_died = FALSE;
     c_data->start_time = get_time();
     c_data->print_control = (t_mutex *)malloc(sizeof(t_mutex));
     pthread_mutex_init(c_data->print_control, NULL);
+    pthread_mutex_init(c_data->control, NULL);
 }
 
 t_philo *init_philo(t_philo *philos, t_common *c_data)
@@ -48,6 +51,7 @@ t_philo *init_philo(t_philo *philos, t_common *c_data)
         philos[i].c_data = c_data;
         philos[i].right_fork = &forks[i];
         philos[i].left_fork = &forks[(i + 1) % c_data->nums_philos];
+        philos[i].last_eat = get_time();
         i++;
     }
     return (philos);
@@ -63,4 +67,5 @@ void init_threads(t_thread *threads, t_philo *philos)
         pthread_create(&threads[i], NULL, &routine, &philos[i]);
         i++;
     }
+    pthread_create(&threads[i], NULL, &monitor, philos);
 }

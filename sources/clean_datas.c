@@ -6,13 +6,13 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 17:50:44 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/12 17:56:27 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:15:09 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void forks_destroy(t_philo *philos, t_common c_data)
+void destroy_mutexes(t_philo *philos, t_common c_data)
 {
     int i;
 
@@ -22,6 +22,8 @@ void forks_destroy(t_philo *philos, t_common c_data)
         pthread_mutex_destroy(philos[i].right_fork);
         i++;
     }
+    pthread_mutex_destroy(c_data.control);
+    pthread_mutex_destroy(c_data.print_control);
 }
 
 void wait_threads(t_thread *threads, t_common c_data)
@@ -34,4 +36,5 @@ void wait_threads(t_thread *threads, t_common c_data)
         pthread_join(threads[i], NULL);
         i++;
     }
+    pthread_join(threads[i], NULL);
 }

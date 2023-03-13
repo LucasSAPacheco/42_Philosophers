@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:40:58 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/12 17:41:04 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:03:14 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,20 @@ typedef struct s_common
     int     time_to_eat;
     int     time_to_sleep;
     int     must_eat;
+    int     finish_eat;
     size_t  start_time;
     t_bool  someone_died;
     t_mutex *print_control;
+    t_mutex *control;
 } t_common;
 
 typedef struct s_philo
 {
     int             id;
     int             eat_count;
-    size_t          time_last_meal;
     t_mutex         *left_fork;
     t_mutex         *right_fork;
+    size_t          last_eat;
     t_bool          is_dead;
     t_common        *c_data;
 } t_philo;
