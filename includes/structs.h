@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:40:58 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 14:03:14 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 18:57:52 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef enum t_bool
 typedef struct s_common
 {
     int     nums_philos;
-    int     time_to_die;
+    size_t    time_to_die;
     int     time_to_eat;
     int     time_to_sleep;
     int     must_eat;
@@ -44,7 +44,6 @@ typedef struct s_philo
     t_mutex         *left_fork;
     t_mutex         *right_fork;
     size_t          last_eat;
-    t_bool          is_dead;
     t_common        *c_data;
 } t_philo;
 

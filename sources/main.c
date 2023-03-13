@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:36:12 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 14:34:39 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 19:12:30 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ int get_finish_eat(t_philo *philo)
     return (finish_eat);
 }
 
+size_t get_time_last_eat(t_philo *philo)
+{
+    size_t time_to_last_eat;
+    
+    pthread_mutex_lock(philo->c_data->control);
+    time_to_last_eat = philo->last_eat;
+    pthread_mutex_unlock(philo->c_data->control);
+    return (time_to_last_eat);
+}
+
 void *monitor(void *_philos)
 {
     t_philo *philos;
@@ -56,11 +66,21 @@ void *monitor(void *_philos)
         {
             if (get_finish_eat(&philos[i]) == philos[i].c_data->nums_philos)
                 return (NULL);
+            if (get_time_last_eat(&philos[i]) > philos[i].c_data->time_to_die)
+            {
+                philos[i].c_data->someone_died = TRUE;
+                pthread_mutex_lock(philos->c_data->print_control);
+                printf("%zu %d died\n", get_time_diff(philos->c_data->start_time), philos[i].id);
+                pthread_mutex_unlock(philos->c_data->print_control);
+                return (NULL);
+            }
             i++;
         }
     }
     return (NULL);
 }
+
+// time to die - tempo que o filosofo pode ficar sem comer
 
 int main(int argc, char *argv[])
 {
