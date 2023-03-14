@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:40:58 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 18:57:52 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 23:13:14 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_common
     t_bool  someone_died;
     t_mutex *print_control;
     t_mutex *control;
+    t_mutex *anyone_died;
 } t_common;
 
 typedef struct s_philo

@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 17:55:25 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 22:12:52 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 23:17:17 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void set_last_meal(t_philo *philo)
 
 void print_action(t_philo *philo, char *str, int i)
 {
-    if (philo->c_data->someone_died == FALSE)
+    if (get_someone_dead(philo) == FALSE)
     {
         while (i--)
             printf("%zu %d %s\n", get_time_diff(philo->c_data->start_time) ,philo->id, str);
@@ -43,7 +43,7 @@ void philo_eating(t_philo *philo)
     set_last_meal(philo);
     pthread_mutex_lock(philo->c_data->print_control);
     print_action(philo, "has taken a fork", 2);
-    print_action(philo, "is eating", 2);
+    print_action(philo, "is eating", 1);
     pthread_mutex_unlock(philo->c_data->print_control);
     usleep(philo->c_data->time_to_eat);
     philo->eat_count++;

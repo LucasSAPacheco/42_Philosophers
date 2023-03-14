@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 17:58:29 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 21:41:37 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 23:42:32 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,22 @@ void init_common_data(t_common *c_data, char *argv[])
     c_data->finish_eat = 0;
     c_data->someone_died = FALSE;
     c_data->start_time = get_time();
-    c_data->print_control = (t_mutex *)malloc(sizeof(t_mutex));
-    c_data->control = (t_mutex *)malloc(sizeof(t_mutex));
+    c_data->print_control = malloc(sizeof(t_mutex));
+    c_data->control = malloc(sizeof(t_mutex));
+    c_data->anyone_died = malloc(sizeof(t_mutex));
     pthread_mutex_init(c_data->print_control, NULL);
     pthread_mutex_init(c_data->control, NULL);
+    pthread_mutex_init(c_data->anyone_died, NULL);
+}
+
+void clean_data(t_philo *philos, t_common *data, t_thread *threads)
+{
+    free(philos->right_fork);
+    free(threads);
+    free(philos);
+    free(data->print_control);
+    free(data->control);
+    free(data->anyone_died);
 }
 
 t_philo *init_philo(t_philo *philos, t_common *c_data)
@@ -37,8 +49,8 @@ t_philo *init_philo(t_philo *philos, t_common *c_data)
     int i;
 
     i = 0;
-    philos = (t_philo *)malloc(sizeof(t_philo) * c_data->nums_philos);
-    forks = (t_mutex *)malloc(sizeof(t_mutex) * c_data->nums_philos);
+    philos = malloc(sizeof(t_philo) * c_data->nums_philos);
+    forks = malloc(sizeof(t_mutex) * c_data->nums_philos);
     while (i < c_data->nums_philos)
     {
         pthread_mutex_init(&forks[i], NULL);

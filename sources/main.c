@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:36:12 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 22:03:11 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 23:39:45 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void *routine(void *_philo)
     t_philo *philo;
 
     philo = (t_philo*)_philo;
-    while (get_someone_die(philo) == FALSE)
+    while (get_someone_dead(philo) == FALSE)
     {
         philo_eating(philo);
         if (philo->eat_count == philo->c_data->must_eat)
@@ -44,21 +44,21 @@ int get_finish_eat(t_philo *philo)
     return (finish_eat);
 }
 
-t_bool get_someone_die(t_philo *philo)
+t_bool get_someone_dead(t_philo *philo)
 {
     t_bool someone_died;
     
-    pthread_mutex_lock(philo->c_data->control);
+    pthread_mutex_lock(philo->c_data->anyone_died);
     someone_died = philo->c_data->someone_died;
-    pthread_mutex_unlock(philo->c_data->control);
+    pthread_mutex_unlock(philo->c_data->anyone_died);
     return (someone_died);
 }
 
 void	set_someone_dead(t_philo *philo)
 {
-	pthread_mutex_lock(philo->c_data->control);
+	pthread_mutex_lock(philo->c_data->anyone_died);
 	philo->c_data->someone_died = TRUE;
-	pthread_mutex_unlock(philo->c_data->control);
+	pthread_mutex_unlock(philo->c_data->anyone_died);
 }
 
 void *monitor(void *_philos)
@@ -99,10 +99,11 @@ int main(int argc, char *argv[])
     if (check_errors(argc, argv))
         return (1);
     init_common_data(&c_data, argv);
-    threads = (t_thread *)malloc(sizeof(t_thread) * (c_data.nums_philos + 1));
+    threads = malloc(sizeof(t_thread) * (c_data.nums_philos + 1));
     philos = init_philo(philos, &c_data);
     init_threads(threads, philos);
-    wait_threads(threads, c_data);
-    destroy_mutexes(philos, c_data);
+    wait_threads(threads, &c_data);
+    destroy_mutexes(philos, &c_data);
+    clean_data(philos, &c_data, threads);
     return (0);
 }
