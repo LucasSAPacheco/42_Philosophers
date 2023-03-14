@@ -6,11 +6,18 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 17:55:25 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 18:40:56 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 21:49:54 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+void set_last_meal(t_philo *philo)
+{
+    pthread_mutex_lock(philo->c_data->control);
+    philo->last_eat = get_time();
+    pthread_mutex_unlock(philo->c_data->control);
+}
 
 void philo_eating(t_philo *philo)
 {
@@ -24,7 +31,7 @@ void philo_eating(t_philo *philo)
         pthread_mutex_lock(philo->right_fork);
         pthread_mutex_lock(philo->left_fork);
     }
-    philo->last_eat = get_time_diff(philo->c_data->start_time);
+    set_last_meal(philo);
     pthread_mutex_lock(philo->c_data->print_control);
     printf("%zu %d has taken a fork\n", get_time_diff(philo->c_data->start_time) ,philo->id);
     printf("%zu %d has taken a fork\n", get_time_diff(philo->c_data->start_time) ,philo->id);

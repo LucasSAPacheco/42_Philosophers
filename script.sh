@@ -1,4 +1,4 @@
-./philo 4 500 500 500 9 > test
+./philo 4 501 250 250 3 > test
 echo "Philo 1"
 cat test | grep "1 is eating" | wc -l
 echo "Philo 2"

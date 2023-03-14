@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:36:12 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 19:12:30 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 21:55:26 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void *routine(void *_philo)
     t_philo *philo;
 
     philo = (t_philo*)_philo;
-    while (philo->c_data->someone_died == FALSE)
+    while (get_someone_die(philo) == FALSE)
     {
         philo_eating(philo);
         if (philo->eat_count == philo->c_data->must_eat)
@@ -29,6 +29,7 @@ void *routine(void *_philo)
         }
         philo_sleep(philo);
         philo_think(philo);
+        usleep(100);
     }
     return (NULL);
 }
@@ -43,14 +44,21 @@ int get_finish_eat(t_philo *philo)
     return (finish_eat);
 }
 
-size_t get_time_last_eat(t_philo *philo)
+t_bool get_someone_die(t_philo *philo)
 {
-    size_t time_to_last_eat;
+    t_bool someone_died;
     
     pthread_mutex_lock(philo->c_data->control);
-    time_to_last_eat = philo->last_eat;
+    someone_died = philo->c_data->someone_died;
     pthread_mutex_unlock(philo->c_data->control);
-    return (time_to_last_eat);
+    return (someone_died);
+}
+
+void	set_someone_dead(t_philo *philo)
+{
+	pthread_mutex_lock(philo->c_data->control);
+	philo->c_data->someone_died = TRUE;
+	pthread_mutex_unlock(philo->c_data->control);
 }
 
 void *monitor(void *_philos)
@@ -66,9 +74,9 @@ void *monitor(void *_philos)
         {
             if (get_finish_eat(&philos[i]) == philos[i].c_data->nums_philos)
                 return (NULL);
-            if (get_time_last_eat(&philos[i]) > philos[i].c_data->time_to_die)
+            if (get_time_diff(philos->last_eat) > philos[i].c_data->time_to_die)
             {
-                philos[i].c_data->someone_died = TRUE;
+                set_someone_dead(&philos[i]);
                 pthread_mutex_lock(philos->c_data->print_control);
                 printf("%zu %d died\n", get_time_diff(philos->c_data->start_time), philos[i].id);
                 pthread_mutex_unlock(philos->c_data->print_control);
@@ -76,11 +84,10 @@ void *monitor(void *_philos)
             }
             i++;
         }
+        usleep(100);
     }
     return (NULL);
 }
-
-// time to die - tempo que o filosofo pode ficar sem comer
 
 int main(int argc, char *argv[])
 {

@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 17:58:29 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 19:02:26 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 21:41:37 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void init_common_data(t_common *c_data, char *argv[])
 {
     c_data->nums_philos = ft_atoi(argv[1]);
-    c_data->time_to_die = (ft_atoi(argv[2]) * 1000);
+    c_data->time_to_die = (ft_atoi(argv[2]));
     c_data->time_to_eat = (ft_atoi(argv[3]) * 1000);
     c_data->time_to_sleep = (ft_atoi(argv[4]) * 1000);
     if (argv[5])
@@ -52,7 +52,7 @@ t_philo *init_philo(t_philo *philos, t_common *c_data)
         philos[i].c_data = c_data;
         philos[i].right_fork = &forks[i];
         philos[i].left_fork = &forks[(i + 1) % c_data->nums_philos];
-        philos[i].last_eat = c_data->start_time;
+        philos[i].last_eat = get_time();
         i++;
     }
     return (philos);
