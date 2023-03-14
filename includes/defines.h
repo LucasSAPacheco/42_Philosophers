@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:41:15 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 19:31:51 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 22:11:24 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ t_philo *init_philo(t_philo *philos, t_common *c_data);
 void init_threads(t_thread *threads, t_philo *philos);
 void *monitor(void *_philos);
 t_bool get_someone_die(t_philo *philo);
+void print_action(t_philo *philo, char *str, int i);
 
 #endif

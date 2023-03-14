@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 17:55:25 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/13 21:49:54 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/13 22:12:52 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ void set_last_meal(t_philo *philo)
     pthread_mutex_lock(philo->c_data->control);
     philo->last_eat = get_time();
     pthread_mutex_unlock(philo->c_data->control);
+}
+
+void print_action(t_philo *philo, char *str, int i)
+{
+    if (philo->c_data->someone_died == FALSE)
+    {
+        while (i--)
+            printf("%zu %d %s\n", get_time_diff(philo->c_data->start_time) ,philo->id, str);
+    }
 }
 
 void philo_eating(t_philo *philo)
@@ -33,9 +42,8 @@ void philo_eating(t_philo *philo)
     }
     set_last_meal(philo);
     pthread_mutex_lock(philo->c_data->print_control);
-    printf("%zu %d has taken a fork\n", get_time_diff(philo->c_data->start_time) ,philo->id);
-    printf("%zu %d has taken a fork\n", get_time_diff(philo->c_data->start_time) ,philo->id);
-    printf("%zu %d is eating\n", get_time_diff(philo->c_data->start_time) ,philo->id);
+    print_action(philo, "has taken a fork", 2);
+    print_action(philo, "is eating", 2);
     pthread_mutex_unlock(philo->c_data->print_control);
     usleep(philo->c_data->time_to_eat);
     philo->eat_count++;
@@ -46,14 +54,14 @@ void philo_eating(t_philo *philo)
 void philo_think(t_philo *philo)
 {
     pthread_mutex_lock(philo->c_data->print_control);
-    printf("%zu %d is thinking\n", get_time_diff(philo->c_data->start_time) ,philo->id);
+    print_action(philo, "is thinking", 1);
     pthread_mutex_unlock(philo->c_data->print_control);
 }
 
 void philo_sleep(t_philo *philo)
 {
     pthread_mutex_lock(philo->c_data->print_control);
-    printf("%zu %d is sleeping\n", get_time_diff(philo->c_data->start_time) ,philo->id);
+    print_action(philo, "is sleeping", 1);
     pthread_mutex_unlock(philo->c_data->print_control);
     usleep(philo->c_data->time_to_sleep);
 }
