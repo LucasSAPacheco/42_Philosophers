@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:10:19 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/12 15:30:36 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/14 11:10:14 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,21 @@ static	void	msg_error_invald_argc(void)
 	printf(CYAN"|____________________________________________________|\n"RESET);
 }
 
-int is_number(char *str)
+int	is_number(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        if (!ft_isdigit(str[i]))
-            return (0);
-        i++;
-    }
-    return (1);
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-int is_valid_arguments(char *argv[])
+int	is_valid_arguments(char *argv[])
 {
 	int				i;
 	int				j;
@@ -71,12 +71,11 @@ int is_valid_arguments(char *argv[])
 	return (0);
 }
 
-
-int check_errors(int argc, char *argv[])
+int	check_errors(int argc, char *argv[])
 {
-    if (argc < 5 || argc > 6)
+	if (argc < 5 || argc > 6)
 		return (msg_error_invald_argc(), 1);
-    if (is_valid_arguments(argv))
-       return (printf(CYAN"The arguments must be positive integers!\n"RESET));
-    return (0);
+	if (is_valid_arguments(argv))
+		return (printf(CYAN"The arguments must be positive integers!\n"RESET));
+	return (0);
 }

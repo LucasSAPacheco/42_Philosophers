@@ -4,13 +4,14 @@ OBJ_DIR				=	./obj
 OBJS				=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 HEADER_PATH			=	./includes
-HEADER_FILES		=	defines.h philosophers.h structs.h
+HEADER_FILES		=	defines.h philosophers.h
 
 SRCS				=	$(SOURCES)
 
 CC					=	cc
 
 SOURCES				=	main.c utils.c error.c clean_datas.c actions.c init_functions.c\
+						get_set_variables.c
 						
 
 DIRS				=	. sources

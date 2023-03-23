@@ -6,12 +6,12 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:38:22 by lsantana          #+#    #+#             */
-/*   Updated: 2023/02/17 11:38:26 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:19:08 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTF_COLORS_H
-# define PRINTF_COLORS_H
+#ifndef COLORS_H
+# define COLORS_H
 
 // regular
 

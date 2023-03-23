@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 11:38:36 by lsantana          #+#    #+#             */
-/*   Updated: 2023/03/08 14:32:57 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:15:38 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include "./colors.h"
-# include "./structs.h"
 # include "./defines.h"
 
 #endif
